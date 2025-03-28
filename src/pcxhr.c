@@ -842,7 +842,7 @@ static void pcxhr_start_linked_stream(struct pcxhr_mgr *mgr)
 			}
 		}
 	}
-        mutex_unlock(&mgr->lock);
+	mutex_unlock(&mgr->lock);
 
 	mutex_unlock(&mgr->setup_mutex);
 
@@ -1263,7 +1263,7 @@ static void pcxhr_proc_info(struct snd_info_entry *entry,
 	struct pcxhr_mgr *mgr = chip->mgr;
 	int i = 0;
 
-        snd_iprintf(buffer, "\n%s\n", mgr->name);
+	snd_iprintf(buffer, "\n%s\n", mgr->name);
 
 	/* stats available when embedded DSP is running */
 	if (mgr->dsp_loaded & (1 << PCXHR_FIRMWARE_DSP_MAIN_INDEX)) {
@@ -1580,7 +1580,6 @@ static int pcxhr_free(struct pcxhr_mgr *mgr)
 	return 0;
 }
 
-
 /*
  *    probe function - creates the card manager
  */
@@ -1744,8 +1743,8 @@ static int pcxhr_probe(struct pci_dev *pci,
 
 		snprintf(tmpid, sizeof(tmpid), "%s-%d",
 			 id[dev] ? id[dev] : card_name, i);
-                err = snd_card_new(&pci->dev, idx, tmpid, THIS_MODULE,
-                        0, &card);
+		err = snd_card_new(&pci->dev, idx, tmpid, THIS_MODULE,
+				   0, &card);
 
 		if (err < 0) {
 			dev_err(&pci->dev, "cannot allocate the card %d\n", i);

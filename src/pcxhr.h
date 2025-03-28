@@ -16,7 +16,7 @@
 #include "pcxhr_hrtimer.h"
 
 /* Driver version :  2.0.13 */
-#define PCXHR_DRIVER_VERSION				0x020013
+#define PCXHR_DRIVER_VERSION		0x020013
 #define PCXHR_DRIVER_VERSION_STRING	"2.0.13"
 
 /* Workaround for CentOS/RHEL */

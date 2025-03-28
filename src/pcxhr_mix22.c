@@ -50,7 +50,6 @@
 #define AKM_LEFT_LEVEL_CMD	0xA600
 #define AKM_RIGHT_LEVEL_CMD	0xA700
 
-
 /* values for PCHR_XLX_STATUS register - READ */
 #define PCXHR_STAT_SRC_LOCK		0x01
 #define PCXHR_STAT_LEVEL_IN		0x02
@@ -358,6 +357,7 @@ static int hr222_set_akm_hw_playback_level(struct pcxhr_mgr *mgr,
 	return 0;
 }
 
+
 static int hr222_set_hw_capture_level(struct pcxhr_mgr *mgr,
 				      int level_l, int level_r, int level_mic)
 {
@@ -456,13 +456,15 @@ int hr222_sub_init(struct pcxhr_mgr *mgr)
 				PCXHR_AKM_CODECS_SETTLING_TIME_MS);
 	
 	dev_dbg(&mgr->pci->dev, "init board %s\n",
-                pcxhr_is_board_revision (mgr, PCXHR_BOARD_REVISION_7) ? "IE7" : "IE5");
+		pcxhr_is_board_revision (mgr, PCXHR_BOARD_REVISION_7) ? "IE7" : "IE5");
 	pcxhr_is_board_revision (mgr, PCXHR_BOARD_REVISION_7) ? hr222_ti_sub_init(mgr) : hr222_akm_sub_init(mgr);
 	
 	/* init micro boost */
 	hr222_micro_boost(mgr, 0);
+
 	return 0;
 }
+
 
 /* calc PLL register */
 /* TODO : there is a very similar fct in pcxhr.c */
@@ -609,16 +611,14 @@ int hr222_sub_set_clock(struct pcxhr_mgr *mgr,
 	
 	mgr->sample_rate_real = realfreq;
 	mgr->cur_clock_type = mgr->use_clock_type;
-	
+
 	if (changed)
 		*changed = 1;
-	
+
 	dev_dbg(&mgr->pci->dev, "set_clock to %dHz (realfreq=%d pllreg=%x)\n",
 		    rate, realfreq, pllreg);
-
 	return 0;
 }
-
 
 int hr222_get_external_clock(struct pcxhr_mgr *mgr,
 			     enum pcxhr_clock_type clock_type,
@@ -641,14 +641,15 @@ int hr222_get_external_clock(struct pcxhr_mgr *mgr,
 		reg = PCXHR_STAT_FREQ_UER1_MASK;
 
 	} else {
-		dev_dbg(&mgr->pci->dev, "get_external_clock : type %d not supported\n",
+		dev_dbg(&mgr->pci->dev,
+			"get_external_clock : type %d not supported\n",
 			    clock_type);
 		return -EINVAL; /* other clocks not supported */
 	}
 
 	if ((PCXHR_INPB(mgr, PCXHR_DSP, PCXHR_XLX_CSUER) & mask) != mask) {
 		dev_dbg(&mgr->pci->dev,
-                        "get_external_clock(%d) = 0 Hz\n", clock_type);
+			"get_external_clock(%d) = 0 Hz\n", clock_type);
 		*sample_rate = 0;
 		return 0; /* no external clock locked */
 	}
@@ -739,7 +740,6 @@ int hr222_write_gpo(struct pcxhr_mgr *mgr, int value)
 	return 0;
 }
 
-
 int hr222_manage_timecode(struct pcxhr_mgr *mgr, int enable)
 {
 	if (enable)
@@ -750,7 +750,6 @@ int hr222_manage_timecode(struct pcxhr_mgr *mgr, int enable)
 	PCXHR_OUTPB(mgr, PCXHR_DSP, PCXHR_DSP_RESET, mgr->dsp_reset);
 	return 0;
 }
-
 
 int hr222_update_analog_audio_level(struct snd_pcxhr *chip,
 				    int is_capture, int channel)

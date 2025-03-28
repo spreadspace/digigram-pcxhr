@@ -76,8 +76,8 @@ static int pcxhr_check_reg_bit(struct pcxhr_mgr *mgr, unsigned int bar, unsigned
 		*read = PCXHR_INPB(mgr, bar, reg);
 		if ((*read & mask) == bit) {
 			if (i > 100)
-                          dev_dbg(&mgr->pci->dev,
-                                  "ATTENTION! check_reg(%x) loopcount=%d\n",
+				dev_dbg(&mgr->pci->dev,
+					"ATTENTION! check_reg(%x) loopcount=%d\n",
 					    reg, i);
 			return 0;
 		}
@@ -871,7 +871,6 @@ int pcxhr_set_pipe_state(struct pcxhr_mgr *mgr, int playback_mask,
 
 	start_time = ktime_get();
 #endif
-	
 	audio_mask = (playback_mask |
 		      (capture_mask << PCXHR_PIPE_STATE_CAPTURE_OFFSET));
 	/* current pipe state (playback + record) */
@@ -922,7 +921,7 @@ int pcxhr_set_pipe_state(struct pcxhr_mgr *mgr, int playback_mask,
 	stop_time = ktime_get();
 	diff_time = ktime_sub(stop_time, start_time);
 	dev_dbg(&mgr->pci->dev, "***SET PIPE STATE*** TIME = %ld (err = %x)\n",
-		    (long)(ktime_to_ns(diff_time)), err);
+			(long)(ktime_to_ns(diff_time)), err);
 #endif
 	return 0;
 }
@@ -1010,13 +1009,13 @@ static void pcxhr_msg_thread(struct pcxhr_mgr *mgr)
 
 	if (mgr->src_it_dsp & PCXHR_IRQ_FREQ_CHANGE)
 		dev_dbg(&mgr->pci->dev,
-                        "PCXHR_IRQ_FREQ_CHANGE event occurred\n");
+			"PCXHR_IRQ_FREQ_CHANGE event occurred\n");
 	if (mgr->src_it_dsp & PCXHR_IRQ_TIME_CODE)
 		dev_dbg(&mgr->pci->dev,
-                        "PCXHR_IRQ_TIME_CODE event occurred\n");
+			"PCXHR_IRQ_TIME_CODE event occurred\n");
 	if (mgr->src_it_dsp & PCXHR_IRQ_NOTIFY)
 		dev_dbg(&mgr->pci->dev,
-                        "PCXHR_IRQ_NOTIFY event occurred\n");
+			"PCXHR_IRQ_NOTIFY event occurred\n");
 	if (mgr->src_it_dsp & (PCXHR_IRQ_FREQ_CHANGE | PCXHR_IRQ_TIME_CODE)) {
 		/* clear events FREQ_CHANGE and TIME_CODE */
 		pcxhr_init_rmh(prmh, CMD_TEST_IT);
@@ -1025,7 +1024,8 @@ static void pcxhr_msg_thread(struct pcxhr_mgr *mgr)
 			    err, prmh->stat[0]);
 	}
 	if (mgr->src_it_dsp & PCXHR_IRQ_ASYNC) {
-		dev_err(&mgr->pci->dev, "PCXHR_IRQ_ASYNC event occurred\n");
+		dev_dbg(&mgr->pci->dev,
+			"PCXHR_IRQ_ASYNC event occurred\n");
 
 		pcxhr_init_rmh(prmh, CMD_ASYNC);
 		prmh->cmd[0] |= 1;	/* add SEL_ASYNC_EVENTS */
@@ -1046,7 +1046,8 @@ static void pcxhr_msg_thread(struct pcxhr_mgr *mgr)
 			u32 err2;
 
 			if (prmh->stat[i] & 0x800000) {	/* if BIT_END */
-				dev_dbg(&mgr->pci->dev, "TASKLET : End%sPipe %d\n",
+				dev_dbg(&mgr->pci->dev,
+					"TASKLET : End%sPipe %d\n",
 					    is_capture ? "Record" : "Play",
 					    pipe);
 			}
