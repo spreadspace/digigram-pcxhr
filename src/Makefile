@@ -1,5 +1,5 @@
 
-snd-pcxhr-objs := pcxhr.o pcxhr_hwdep.o pcxhr_mixer.o pcxhr_core.o pcxhr_mix22.o pcxhr_hrtimer.o
+snd-pcxhr-y := pcxhr.o pcxhr_hwdep.o pcxhr_mixer.o pcxhr_core.o pcxhr_mix22.o pcxhr_hrtimer.o
 # pcxhr_clock_monitoring.o 
 obj-$(CONFIG_SND_PCXHR) += snd-pcxhr.o
 
