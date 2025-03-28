@@ -304,9 +304,6 @@ static inline unsigned int pcxhr_ti_is_valid_output_gain_level (const int level)
 // Return the TI DAC gain value from the given level value.
 static unsigned int pcxhr_ti_gain_level_to_register_value(const unsigned int level)
 {
-	
-	snd_printdd("%s() : level:%u\n",__FUNCTION__,level);
-	
 	if (level == 0)
 		return PCXHR_PCM1796_MUTE_OUTPUT_GAIN_VALUE;
 	
