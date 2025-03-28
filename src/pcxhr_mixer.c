@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-2.0-or-later
 #define __NO_VERSION__
 /*
  * Driver for Digigram pcxhr compatible soundcards
