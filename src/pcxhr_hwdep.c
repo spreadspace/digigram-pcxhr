@@ -373,7 +373,7 @@ static int get_xilinx_version(struct pcxhr_mgr *mgr){
  */
 int pcxhr_setup_firmware(struct pcxhr_mgr *mgr)
 {
-	static char *fw_files[][5] = {
+	static const char *fw_files[][5] = {
 	    /*  xilinx 1      xilinx 2          eeprom           boot              dsp           */
 	[0] = { "xlxint.dat", "xlxc882hr.dat",  "dspe882.e56",   "dspb882hr.b56",  "dspd882.d56" },
 	[1] = { "xlxint.dat", "xlxc882e.dat",   "dspe882.e56",   "dspb882e.b56",   "dspd882.d56" },
