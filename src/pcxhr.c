@@ -753,8 +753,9 @@ static void pcxhr_start_linked_stream(struct pcxhr_mgr *mgr)
 	int playback_mask = 0;
 
 #ifdef CONFIG_SND_DEBUG_VERBOSE
-	struct timespec64 start_date, end_date, delta_t;
-	ktime_get_real_ts64(&start_date);
+	ktime_t start_time, stop_time, diff_time;
+
+	start_time = ktime_get();
 #endif
 	mutex_lock(&mgr->setup_mutex);
 
@@ -865,10 +866,10 @@ static void pcxhr_start_linked_stream(struct pcxhr_mgr *mgr)
 	mutex_unlock(&mgr->setup_mutex);
 
 #ifdef CONFIG_SND_DEBUG_VERBOSE
-	ktime_get_real_ts64(&end_date);
-	delta_t = timespec64_sub(end_date, start_date);
+	stop_time = ktime_get();
+	diff_time = ktime_sub(stop_time, start_time);
 	dev_dbg(&mgr->pci->dev, "***TRIGGER START*** TIME = %ld (err = %x)\n",
-		    (long)delta_t.tv_nsec/1000, err);
+		    (long)(ktime_to_ns(diff_time)), err);
 #endif
 }
 
